@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium YouTube Downloader | Fast & Free | YT-QuickSave</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2d8cff;
+            --primary-dark: #1a73e8;
+            --danger: #ff3d57;
+            --success: #00c853;
+            --dark: #202124;
+            --gray: #5f6368;
+            --light-gray: #f1f3f4;
+            --bg-color: #f8f9fa;
+            --text-color: #202124;
+            --card-bg: white;
+            --footer-bg: #202124;
+            --footer-text: white;
+            --faq-bg: white;
+            --step-bg: white;
+            --input-bg: white;
+            --input-border: #f1f3f4;
+            --feature-bg: #f8f9fa;
+            --header-bg: white;
+            --hero-bg: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --footer-bg: #000000;
+            --footer-text: #b0b0b0;
+            --faq-bg: #1e1e1e;
+            --step-bg: #1e1e1e;
+            --input-bg: #2d2d2d;
+            --input-border: #3d3d3d;
+            --feature-bg: #2d2d2d;
+            --header-bg: #1a1a1a;
+            --hero-bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            --light-gray: #3d3d3d;
+            --gray: #a0a0a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        
+        body {
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 20px;
+            background-color: var(--light-gray);
+        }
+        
+        .theme-toggle i {
+            font-size: 16px;
+        }
+        
+        .theme-toggle span {
+            font-size: 14px;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--gray);
+        }
+        
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                z-index: 101;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--header-bg);
+                flex-direction: column;
+                justify-content: center;
+                gap: 30px;
+                transition: right 0.3s ease;
+                z-index: 100;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .theme-toggle span {
+                display: inline;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: var(--hero-bg);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        /* Download Card */
+        .download-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 800px;
+            margin: -50px auto 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 18px 20px;
+            border: 2px solid var(--input-border);
+            border-radius: 8px 0 0 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+        
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+        
+        .input-group button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 30px;
+            border-radius: 0 8px 8px 0;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .input-group button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            background-color: var(--feature-bg);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .feature-item h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        /* How It Works */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            background-color: var(--step-bg);
+            border-radius: 12px;
+            padding: 30px;
+            width: 280px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        .step h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            background-color: var(--faq-bg);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 500px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fab fa-youtube" style="color: var(--danger); font-size: 32px;"></i>
+                <span class="logo-text">YT-QuickSave</span>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="">Home</a>
+                <a href="#">How It Works</a>
+                <a href="#">Features</a>
+                <a href="#">FAQ</a>
+                <div class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section id="hero" class="hero">
+        <div class="container">
+            <h1>Download YouTube Videos in HD Quality</h1>
+            <p>Fast, free and secure YouTube video downloader. Save videos in MP4, MP3, and other formats without registration.</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="download-card">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="url" placeholder="Paste YouTube link here..." id="video-url">
+                    <button id="download-btn"><i class="fas fa-download"></i> Download</button>
+                </div>
+            </form>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Super Fast</h3>
+                    <p>Download videos at maximum speed with our optimized servers</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>100% Safe</h3>
+                    <p>No registration required. We don't store your personal data</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3>Unlimited</h3>
+                    <p>No download limits. Get as many videos as you need</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>How to Download YouTube Videos</h2>
+                <p>Downloading videos with YT-QuickSave is easier than ever. Just follow these simple steps:</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Copy Video URL</h3>
+                    <p>Go to YouTube and copy the link of the video you want to download</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Paste Link</h3>
+                    <p>Paste the YouTube URL in the box above and click "Download"</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Download & Enjoy</h3>
+                    <p>Save the video to your device and watch it offline anytime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section" style="background-color: var(--feature-bg);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our YouTube downloader</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is YT-QuickSave free to use?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, YT-QuickSave is completely free to use. You can download as many YouTube videos as you want without any charges or hidden fees.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What video formats are supported?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We support MP4, WEBM, 3GP and other popular video formats. You can also download audio-only in MP3 format.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is there a download limit?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No, there are no download limits. You can download as many videos as you need without restrictions.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is this service legal?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>YT-QuickSave operates in accordance with YouTube's Terms of Service. We recommend downloading videos only for personal use and respecting copyright laws.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>YT-QuickSave</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Formats</h3>
+                    <ul>
+                        <li><a href="#">MP4 Downloader</a></li>
+                        <li><a href="#">MP3 Converter</a></li>
+                        <li><a href="#">HD Videos</a></li>
+                        <li><a href="#">4K Videos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">DMCA</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 YT-QuickSave - YouTube Video Downloader. All rights reserved.</p>
+                <p>This service is not affiliated with YouTube or Google LLC.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        // Check for saved theme preference or use preferred color scheme
+        const savedTheme = localStorage.getItem('theme') || 
+                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // Apply the saved theme
+        if (savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
+        }
+        
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i><span>Dark Mode</span>';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
+            }
+        });
+        
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+                
+                // Close other open FAQs
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    if (faq !== item && faq.classList.contains('active')) {
+                        faq.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // Download button functionality
+        document.getElementById('download-btn').addEventListener('click', () => {
+            const url = document.getElementById('video-url').value;
+            
+            if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
+                alert('Please enter a valid YouTube URL');
+                return;
+            }
+            
+            // In a real implementation, this would process the download
+            alert('Processing download... This is a demo interface. In a real implementation, this would connect to a backend service to download the video.');
+        });
+        
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    </script>
+</body>
+</html>
